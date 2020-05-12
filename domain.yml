@@ -1,0 +1,18 @@
+intents:
+  - oi
+  - temperatura
+  - umidade
+  - ph
+
+responses:
+  utter_oi:
+  - text: "Olá! Eu posso te informar sobre a temperatura , umidade e ph do solo. O que deseja saber?"
+
+actions:
+  - action_temperatura
+  - action_umidade
+  - action_ph
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
