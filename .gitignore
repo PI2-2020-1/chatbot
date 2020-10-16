@@ -1,0 +1,6 @@
+env/
+models/
+*.pyc
+ngrok
+ngrok-stable-linux-amd64.zip
+__pycache__/
