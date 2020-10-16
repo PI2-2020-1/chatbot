@@ -3,10 +3,13 @@ intents:
   - temperatura
   - umidade
   - ph
+  - tchau
 
 responses:
   utter_oi:
   - text: "Olá! Eu posso te informar sobre a temperatura , umidade e ph do solo. O que deseja saber?"
+  utter_tchau:
+  - text: "Até mais!"
 
 actions:
   - action_temperatura

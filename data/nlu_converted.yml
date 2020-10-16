@@ -1,0 +1,46 @@
+version: "2.0"
+nlu:
+- intent: oi
+  examples: |
+    - oi
+    - ola
+    - hey
+    - hi
+    - oie
+    - olaa
+    - tudo bem
+    - tudo bem com vc
+    - como vai
+- intent: tchau
+  examples: |
+    - tchau
+    - xau
+    - ate mais
+    - ate mais tarde
+    - ate
+- intent: temperatura
+  examples: |
+    - temperatura
+    - qual a temperatura do solo
+    - me diz a temperatura do solo
+    - quero saber a temperatura do solo
+    - em qual temperatura esta o solo
+- intent: umidade
+  examples: |
+    - umidade
+    - humidade
+    - qual a humidade do solo
+    - me diz a humidade do solo
+    - quero saber a humidade do solo
+    - em qual humidade esta o solo
+    - qual a umidade do solo
+    - me diz a umidade do solo
+    - quero saber a umidade do solo
+    - em qual umidade esta o solo
+- intent: ph
+  examples: |
+    - ph
+    - qual a ph do solo
+    - me diz a ph do solo
+    - quero saber a ph do solo
+    - em qual ph esta o solo

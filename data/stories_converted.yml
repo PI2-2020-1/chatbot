@@ -1,0 +1,22 @@
+version: "2.0"
+stories:
+- story: happy path
+  steps:
+  - intent: oi
+  - action: utter_oi
+- story: happy path
+  steps:
+  - intent: temperatura
+  - action: action_temperatura
+- story: happy path
+  steps:
+  - intent: umidade
+  - action: action_umidade
+- story: happy path
+  steps:
+  - intent: ph
+  - action: action_ph
+- story: tchau
+  steps:
+  - intent: tchau
+  - action: utter_tchau
