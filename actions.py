@@ -50,7 +50,7 @@ class ActionTemperatura(Action):
             return []
 
         dispatcher.utter_message(
-            text="Pegando a temperatura para a fazenda de " + response['full_name'] + " ...")
+            text="Pegando a temperatura para a fazenda de " + response['full_name'] + "...")
         time.sleep(2)
 
         value = random.randint(20, 45)
@@ -76,7 +76,7 @@ class ActionUmidade(Action):
             return []
 
         dispatcher.utter_message(
-            text="Pegando a umidade para a fazenda de " + response['full_name'] + " ...")
+            text="Pegando a umidade para a fazenda de " + response['full_name'] + "...")
         time.sleep(2)
 
         value = random.randint(0, 100)
@@ -102,7 +102,7 @@ class ActionPH(Action):
             return []
 
         dispatcher.utter_message(
-            text="Pegando o ph para a fazenda de " + response['full_name'] + " ...")
+            text="Pegando o ph para a fazenda de " + response['full_name'] + "...")
         time.sleep(2)
 
         value = random.randint(1, 10)
