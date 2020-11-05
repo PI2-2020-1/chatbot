@@ -70,7 +70,7 @@ class ActionDadosAtuais(Action):
             text="Pegando " + DATA_STRING[data_type] + " para a fazenda de " + response['full_name'] + "...")
         time.sleep(2)
 
-        text = "O valor d" + DATA_STRING[data_type] + " temperatura atual do solo é de" + str(value) + "."
+        text = "O valor d" + DATA_STRING[data_type] + " é de " + str(value) + "."
 
         dispatcher.utter_message(text=text)
 
@@ -104,6 +104,6 @@ class ActionParametroIdeais(Action):
 
         dispatcher.utter_message(text=text)
 
-        return [SlotSet('data_type', None)]
+        return [SlotSet('data_type', None), SlotSet('max', None), SlotSet('min', None)]
 
 

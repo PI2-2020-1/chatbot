@@ -52,6 +52,16 @@ responses:
       payload: "T"
     - title: "Vento"
       payload: "V"
+    - title: "Ph"
+      payload: "PH"
+    - title: "Umidade do Solo"
+      payload: "US"
+    - title: "Umidade do Ar"
+      payload: "UA"
+    - title: "Pressão"
+      payload: "PA"
+    - title: "Chuvas"
+      payload: "IP"
   
   utter_ask_max:
   - text: "Qual o valor máximo desse parâmetro?"
