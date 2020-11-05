@@ -1,20 +1,90 @@
+version: '2.0'
+
 intents:
   - oi
-  - temperatura
-  - umidade
-  - ph
   - tchau
+  - bom_dia
+  - boa_tarde
+  - boa_noite
+  - parametros_ideais 
+  - dados_atuais
 
 responses:
   utter_oi:
-  - text: "Olá! Eu posso te informar sobre a temperatura , umidade e ph do solo. O que deseja saber?"
+  - text: "Olá! Eu sou o A2P2 bot. O que você deseja fazer?"
+    buttons:
+    - title: "Consultar dados"
+      payload: "/dados_atuais"
+    - title: "Definir valores ideais"
+      payload: "/parametros_ideais"
+
   utter_tchau:
-  - text: "Até mais!"
+  - text: "Essa foi a apresentação do grupo A2P2, até mais!"
+  
+  utter_bom_dia:
+  - text: "Bom dia! Eu sou o A2P2 bot. O que você deseja fazer?"
+    buttons:
+    - title: "Consultar dados"
+      payload: "/dados_atuais"
+    - title: "Definir valores ideais"
+      payload: "/parametros_ideais"
+
+  utter_boa_tarde:
+  - text: "Boa tarde! Eu sou o A2P2 bot. O que você deseja fazer?"
+    buttons:
+    - title: "Consultar dados"
+      payload: "/dados_atuais"
+    - title: "Definir valores ideais"
+      payload: "/parametros_ideais"
+
+  utter_boa_noite:
+  - text: "Boa noite! Eu sou o A2P2 bot. O que você deseja fazer?"
+    buttons:
+    - title: "Consultar dados"
+      payload: "/dados_atuais"
+    - title: "Definir valores ideais"
+      payload: "/parametros_ideais"
+  
+  utter_ask_data_type:
+  - text: "Primeiro escolha o parâmetro."
+    buttons:
+    - title: "Temperatura"
+      payload: "T"
+    - title: "Vento"
+      payload: "V"
+  
+  utter_ask_max:
+  - text: "Qual o valor máximo desse parâmetro?"
+
+  utter_ask_min:
+  - text: "Qual o valor mínimo desse parâmetro?"
+
+  utter_default:
+  - text: Desculpe, não entendi. Digite de uma forma diferente.
+
+slots:
+  data_type:
+    type: text
+  max:
+    type: float
+  min:
+    type: float
 
 actions:
-  - action_temperatura
-  - action_umidade
-  - action_ph
+  - action_dados_atuais
+  - action_parametros_ideais
+
+forms:
+  dados_atuais_form:
+    data_type:
+      - type: from_text
+  parametros_ideais_form:
+    data_type:
+      - type: from_text
+    max:
+      - type: from_text
+    min:
+      - type: from_text
 
 session_config:
   session_expiration_time: 60

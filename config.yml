@@ -19,8 +19,11 @@ pipeline:
 # Configuration for Rasa Core.
 # https://rasa.com/docs/rasa/core/policies/
 policies:
-  - name: MemoizationPolicy
+  - name: AugmentedMemoizationPolicy
   - name: TEDPolicy
-    max_history: 2
+    max_history: 3
     epochs: 100
-  - name: MappingPolicy
+  - name: RulePolicy
+    core_fallback_threshold: 0.7
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: True

@@ -5,11 +5,23 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
 
 import random
 import time
 
 logger = logging.getLogger(__name__)
+
+
+DATA_STRING = {
+    "PH": "o ph",
+    "US": "a umidade do solo",
+    "UA": "a umidade do ar",
+    "PA": "a pressão atmosférica",
+    "T": "a temperatura",
+    "V": "a velocidade do vento",
+    "IP": "o índice pluviométrico",
+}
 
 
 def get_telegram_username(tracker):
@@ -35,79 +47,63 @@ def verify_telegram(dispatcher, tracker):
     return r.json()
 
 
-class ActionTemperatura(Action):
+class ActionDadosAtuais(Action):
 
     def name(self) -> Text:
-        return "action_temperatura"
+        return "action_dados_atuais"
 
     async def run(
         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
 
-        response = verify_telegram(dispatcher, tracker)
-
-        if not response:
-            return []
-
-        dispatcher.utter_message(
-            text="Pegando a temperatura para a fazenda de " + response['full_name'] + "...")
-        time.sleep(2)
-
+        # Para testes em desenvolvimento
         value = random.randint(20, 45)
-        text = "A temperatura atual do solo é de {} graus.".format(value)
+        response = {'full_name': 'Geovana'}
+
+        #response = verify_telegram(dispatcher, tracker)
+        if not response:
+            return []
+
+        data_type = tracker.get_slot("data_type")
+
+        dispatcher.utter_message(
+            text="Pegando " + DATA_STRING[data_type] + " para a fazenda de " + response['full_name'] + "...")
+        time.sleep(2)
+
+        text = "O valor d" + DATA_STRING[data_type] + " temperatura atual do solo é de" + str(value) + "."
 
         dispatcher.utter_message(text=text)
 
-        return []
+        return [SlotSet('data_type', None)]
 
 
-class ActionUmidade(Action):
+class ActionParametroIdeais(Action):
 
     def name(self) -> Text:
-        return "action_umidade"
+        return "action_parametros_ideais"
 
     async def run(
         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
 
-        response = verify_telegram(dispatcher, tracker)
+        # Para testes em desenvolvimento
+        value = random.randint(20, 45)
+        response = {'full_name': 'Geovana'}
 
+        #response = verify_telegram(dispatcher, tracker)
         if not response:
             return []
 
+        data_type = tracker.get_slot("data_type")
+
         dispatcher.utter_message(
-            text="Pegando a umidade para a fazenda de " + response['full_name'] + "...")
+            text="Salvando valores ideias d" + DATA_STRING[data_type] + " para a fazenda de " + response['full_name'] + "...")
         time.sleep(2)
 
-        value = random.randint(0, 100)
-        text = "A umidade atual do olo é de {}%.".format(value)
+        text = "Valores ideais definidos com sucesso. Você será notificado quando o valor estiver fora desses limites."
 
         dispatcher.utter_message(text=text)
 
-        return []
+        return [SlotSet('data_type', None)]
 
 
-class ActionPH(Action):
-
-    def name(self) -> Text:
-        return "action_ph"
-
-    async def run(
-        self, dispatcher, tracker: Tracker, domain: Dict[Text, Any],
-    ) -> List[Dict[Text, Any]]:
-
-        response = verify_telegram(dispatcher, tracker)
-
-        if not response:
-            return []
-
-        dispatcher.utter_message(
-            text="Pegando o ph para a fazenda de " + response['full_name'] + "...")
-        time.sleep(2)
-
-        value = random.randint(1, 10)
-        text = "O ph atual do solo é de {}.".format(value)
-
-        dispatcher.utter_message(text=text)
-
-        return []

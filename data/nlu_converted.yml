@@ -18,29 +18,40 @@ nlu:
     - ate mais
     - ate mais tarde
     - ate
-- intent: temperatura
+- intent: bom_dia
   examples: |
-    - temperatura
-    - qual a temperatura do solo
-    - me diz a temperatura do solo
-    - quero saber a temperatura do solo
-    - em qual temperatura esta o solo
-- intent: umidade
+    - bom dia 
+    - ola bom dia 
+    - bom diah
+    - oi bom dia
+    - dia 
+- intent: boa_tarde
   examples: |
-    - umidade
-    - humidade
-    - qual a humidade do solo
-    - me diz a humidade do solo
-    - quero saber a humidade do solo
-    - em qual humidade esta o solo
-    - qual a umidade do solo
-    - me diz a umidade do solo
-    - quero saber a umidade do solo
-    - em qual umidade esta o solo
-- intent: ph
+    - boa tarde 
+    - ola boa tarde
+    - tarde 
+    - boah tarde 
+    - oi boa tarde
+- intent: boa_noite
   examples: |
-    - ph
-    - qual a ph do solo
-    - me diz a ph do solo
-    - quero saber a ph do solo
-    - em qual ph esta o solo
+    - boa noite 
+    - noite 
+    - ola boa noite 
+    - boah noite
+- intent: parametros_ideais
+  examples: | 
+    - atualizar parametros ideais
+    - quero mudar os valores ideais
+    - definir valores ideais para os parametros
+    - definir parametros de alerta
+    - definir limites ideais
+
+- intent: dados_atuais
+  examples: |
+    - quais os valores dos parametros agora 
+    - me informe os dados da fazenda
+    - me informe todos os dados atuais 
+    - quero saber o valor de todos os parametros
+    - todos os parametros 
+    - como esta minha fazenda agora
+    - quero saber os dados da fazenda

@@ -1,22 +1,43 @@
 version: "2.0"
 stories:
-- story: happy path
+
+- story: oi
   steps:
   - intent: oi
   - action: utter_oi
-- story: happy path
+
+- story: boa_tarde
   steps:
-  - intent: temperatura
-  - action: action_temperatura
-- story: happy path
+  - intent: boa_tarde
+  - action: utter_boa_tarde
+
+- story: bom_dia
   steps:
-  - intent: umidade
-  - action: action_umidade
-- story: happy path
+  - intent: bom_dia
+  - action: utter_bom_dia
+
+- story: boa_noite
   steps:
-  - intent: ph
-  - action: action_ph
+  - intent: boa_noite
+  - action: utter_boa_noite
+
 - story: tchau
   steps:
   - intent: tchau
   - action: utter_tchau
+
+- story: dados atuais
+  steps:
+  - intent: dados_atuais
+  - action: dados_atuais_form
+  - active_loop: dados_atuais_form
+  - active_loop: null
+  - action: action_dados_atuais
+
+- story: parametros ideais 
+  steps:
+  - intent: parametros_ideais
+  - action: parametros_ideais_form
+  - active_loop: parametros_ideais_form 
+  - active_loop: null
+  - action: action_parametros_ideais
