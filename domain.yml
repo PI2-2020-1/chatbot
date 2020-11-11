@@ -8,6 +8,10 @@ intents:
   - boa_noite
   - parametros_ideais 
   - dados_atuais
+  - inform
+
+entities:
+  - value
 
 responses:
   utter_oi:
@@ -49,19 +53,19 @@ responses:
   - text: "Primeiro escolha o parâmetro."
     buttons:
     - title: "Temperatura"
-      payload: "T"
+      payload: "2"
     - title: "Vento"
-      payload: "V"
+      payload: "0"
     - title: "Ph"
-      payload: "PH"
+      payload: "3"
     - title: "Umidade do Solo"
-      payload: "US"
+      payload: "4"
     - title: "Umidade do Ar"
-      payload: "UA"
+      payload: "5"
     - title: "Pressão"
-      payload: "PA"
+      payload: "1"
     - title: "Chuvas"
-      payload: "IP"
+      payload: "6"
   
   utter_ask_max:
   - text: "Qual o valor máximo desse parâmetro?"
@@ -69,16 +73,25 @@ responses:
   utter_ask_min:
   - text: "Qual o valor mínimo desse parâmetro?"
 
+  utter_ask_station_number:
+  - text: "Digite o número da estação que deseja saber os dados: "
+
   utter_default:
   - text: Desculpe, não entendi. Digite de uma forma diferente.
 
 slots:
   data_type:
-    type: text
+    type: float
+    influence_conversation: false
   max:
     type: float
+    influence_conversation: false
   min:
     type: float
+    influence_conversation: false
+  station_number:
+    type: float
+    influence_conversation: false
 
 actions:
   - action_dados_atuais
@@ -86,15 +99,19 @@ actions:
 
 forms:
   dados_atuais_form:
-    data_type:
-      - type: from_text
+    station_number:
+      - type: from_entity
+        entity: value
   parametros_ideais_form:
     data_type:
-      - type: from_text
+      - type: from_entity
+        entity: value
     max:
-      - type: from_text
+      - type: from_entity
+        entity: value
     min:
-      - type: from_text
+      - type: from_entity
+        entity: value
 
 session_config:
   session_expiration_time: 60

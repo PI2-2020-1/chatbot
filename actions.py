@@ -12,19 +12,21 @@ import time
 
 logger = logging.getLogger(__name__)
 
-
 DATA_STRING = {
-    "PH": "o ph",
-    "US": "a umidade do solo",
-    "UA": "a umidade do ar",
-    "PA": "a pressão atmosférica",
-    "T": "a temperatura",
-    "V": "a velocidade do vento",
-    "IP": "o índice pluviométrico",
+    "3": "o ph do solo",
+    "4": "a umidade do solo",
+    "5": "a umidade do ar",
+    "1": "a pressão atmosférica",
+    "2": "a temperatura do ar",
+    "0": "a velocidade do vento",
+    "6": "o índice pluviométrico",
 }
 
-
 def get_telegram_username(tracker):
+
+    # Para desenvolvimento
+    return "Geovana_RMS"
+
     events = tracker.current_state()['events']
     user_events = []
     
@@ -56,25 +58,38 @@ class ActionDadosAtuais(Action):
         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
 
-        # Para testes em desenvolvimento
-        value = random.randint(20, 45)
-        response = {'full_name': 'Geovana'}
-
-        #response = verify_telegram(dispatcher, tracker)
+        response = verify_telegram(dispatcher, tracker)
         if not response:
-            return []
-
-        data_type = tracker.get_slot("data_type")
+            return [SlotSet('station_number', None)]
 
         dispatcher.utter_message(
-            text="Pegando " + DATA_STRING[data_type] + " para a fazenda de " + response['full_name'] + "...")
-        time.sleep(2)
+            text="Pegando dados da fazenda de " + response['full_name'] + "...")
 
-        text = "O valor d" + DATA_STRING[data_type] + " é de " + str(value) + "."
+        r = requests.get(
+            'http://localhost:8000/api/latest/' 
+            + str(response['stations'][int(tracker.get_slot("station_number"))]['id'])).json()
+
+        if not r:
+            dispatcher.utter_message(text="Número de estação incorreto")
+            return [SlotSet('station_number', None)]
+
+        values = {}
+
+        for obj in r:
+            values[obj['parameter']] = str(obj['value'])
+    
+        text = "Os valores mais recentes da estação " + tracker.get_slot('station_number') + " são:\n"\
+            "Vento: " + values[0] + "\n"\
+            "Pressão do Ar: " + values[1] + "\n"\
+            "Temperatura do Ar: " + values[2] + "\n"\
+            "Ph do Solo: " + values[3] + "\n"\
+            "Umidade do Solo: " + values[4] + "\n"\
+            "Umidade do Ar: " + values[5] + "\n"\
+            "Índice Pluviométrico: " + values[6] + "\n"\
 
         dispatcher.utter_message(text=text)
 
-        return [SlotSet('data_type', None)]
+        return [SlotSet('station_number', None)]
 
 
 class ActionParametroIdeais(Action):
@@ -86,11 +101,7 @@ class ActionParametroIdeais(Action):
         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
 
-        # Para testes em desenvolvimento
-        value = random.randint(20, 45)
-        response = {'full_name': 'Geovana'}
-
-        #response = verify_telegram(dispatcher, tracker)
+        response = verify_telegram(dispatcher, tracker)
         if not response:
             return []
 
