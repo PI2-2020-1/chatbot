@@ -22,14 +22,15 @@ DATA_STRING = {
     "6": "o índice pluviométrico",
 }
 
-def get_telegram_username(tracker):
+
+def get_telegram_metadata(tracker):
 
     # Para desenvolvimento
-    return "Geovana_RMS"
+    #return "Geovana_RMS"
 
     events = tracker.current_state()['events']
     user_events = []
-    
+
     for e in events:
         if e['event'] == 'user':
             user_events.append(e)
@@ -38,8 +39,11 @@ def get_telegram_username(tracker):
 
 
 def verify_telegram(dispatcher, tracker):
+
+    metadata = get_telegram_metadata(tracker)
+
     r = requests.get(
-        'http://localhost:8000/api/telegram/verification/' + get_telegram_username(tracker))
+        'http://localhost:8000/api/telegram/verification/' + str(metadata[0]) + '/' + str(metadata[1]))
 
     if r.status_code == 404:
         dispatcher.utter_message(
@@ -66,7 +70,7 @@ class ActionDadosAtuais(Action):
             text="Pegando dados da fazenda de " + response['full_name'] + "...")
 
         r = requests.get(
-            'http://localhost:8000/api/latest/' 
+            'http://localhost:8000/api/latest/'
             + str(response['stations'][int(tracker.get_slot("station_number"))]['id'])).json()
 
         if not r:
@@ -77,7 +81,7 @@ class ActionDadosAtuais(Action):
 
         for obj in r:
             values[obj['parameter']] = str(obj['value'])
-    
+
         text = "Os valores mais recentes da estação " + tracker.get_slot('station_number') + " são:\n"\
             "Vento: " + values[0] + "\n"\
             "Pressão do Ar: " + values[1] + "\n"\
@@ -116,5 +120,3 @@ class ActionParametroIdeais(Action):
         dispatcher.utter_message(text=text)
 
         return [SlotSet('data_type', None), SlotSet('max', None), SlotSet('min', None)]
-
-
