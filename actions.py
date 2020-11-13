@@ -1,5 +1,6 @@
 import requests
 import logging
+import json
 
 from typing import Any, Text, Dict, List
 
@@ -26,7 +27,7 @@ DATA_STRING = {
 def get_telegram_metadata(tracker):
 
     # Para desenvolvimento
-    #return "Geovana_RMS"
+    # return ["Geovana_RMS", 12344353]
 
     events = tracker.current_state()['events']
     user_events = []
@@ -53,6 +54,14 @@ def verify_telegram(dispatcher, tracker):
     return r.json()
 
 
+def get_station_pk(station_number, plantations_json):
+    plantation = plantations_json[0]
+
+    for s in plantation["stations"]:
+        if s['number'] == station_number:
+            return s['id']
+
+
 class ActionDadosAtuais(Action):
 
     def name(self) -> Text:
@@ -66,18 +75,20 @@ class ActionDadosAtuais(Action):
         if not response:
             return [SlotSet('station_number', None)]
 
+        station_pk = get_station_pk(int(tracker.get_slot("station_number")), response['plantations'])
+
         dispatcher.utter_message(
             text="Pegando dados da fazenda de " + response['full_name'] + "...")
 
-        r = requests.get(
-            'http://localhost:8000/api/latest/'
-            + str(response['stations'][int(tracker.get_slot("station_number"))]['id'])).json()
+        resp = requests.get('http://localhost:8000/api/latest/' + str(station_pk))
 
-        if not r:
+        if not resp:
             dispatcher.utter_message(text="Número de estação incorreto")
             return [SlotSet('station_number', None)]
 
         values = {}
+
+        r = json.loads(resp.text)
 
         for obj in r:
             values[obj['parameter']] = str(obj['value'])
@@ -107,13 +118,28 @@ class ActionParametroIdeais(Action):
 
         response = verify_telegram(dispatcher, tracker)
         if not response:
-            return []
+            return [SlotSet('data_type', None), SlotSet('max', None), SlotSet('min', None)]
+
+        station_pk = get_station_pk(1, response['plantations'])
 
         data_type = tracker.get_slot("data_type")
+        min_value = tracker.get_slot("min")
+        max_value = tracker.get_slot("max")
 
         dispatcher.utter_message(
             text="Salvando valores ideias d" + DATA_STRING[data_type] + " para a fazenda de " + response['full_name'] + "...")
-        time.sleep(2)
+
+        data = {"parameter_type": data_type,"min_value": min_value, "max_value": max_value}
+        print(data)
+        r = requests.post(
+            url='http://localhost:8000/api/parameter/' + str(station_pk),
+            data=json.dumps(data)
+        )
+
+        if not r:
+            dispatcher.utter_message(text="Erro")
+            return [SlotSet('data_type', None), SlotSet('max', None), SlotSet('min', None)]
+
 
         text = "Valores ideais definidos com sucesso. Você será notificado quando o valor estiver fora desses limites."
 
