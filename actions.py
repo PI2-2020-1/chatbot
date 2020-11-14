@@ -14,12 +14,12 @@ import time
 logger = logging.getLogger(__name__)
 
 DATA_STRING = {
+    "0": "a velocidade do vento",
+    "1": "a pressão atmosférica",
+    "2": "a temperatura do ar",
     "3": "o ph do solo",
     "4": "a umidade do solo",
     "5": "a umidade do ar",
-    "1": "a pressão atmosférica",
-    "2": "a temperatura do ar",
-    "0": "a velocidade do vento",
     "6": "o índice pluviométrico",
 }
 
@@ -27,7 +27,7 @@ DATA_STRING = {
 def get_telegram_metadata(tracker):
 
     # Para desenvolvimento
-    # return ["Geovana_RMS", 12344353]
+    return ["g_msilva", 12344353]
 
     events = tracker.current_state()['events']
     user_events = []
@@ -94,13 +94,13 @@ class ActionDadosAtuais(Action):
             values[obj['parameter']] = str(obj['value'])
 
         text = "Os valores mais recentes da estação " + tracker.get_slot('station_number') + " são:\n"\
-            "Vento: " + values[0] + "\n"\
-            "Pressão do Ar: " + values[1] + "\n"\
-            "Temperatura do Ar: " + values[2] + "\n"\
+            "Vento: " + values[0] + " km/h\n" \
+            "Pressão do Ar: " + values[1] + " hPa\n"\
+            "Temperatura do Ar: " + values[2] + " °C\n"\
             "Ph do Solo: " + values[3] + "\n"\
-            "Umidade do Solo: " + values[4] + "\n"\
-            "Umidade do Ar: " + values[5] + "\n"\
-            "Índice Pluviométrico: " + values[6] + "\n"\
+            "Umidade do Solo: " + values[4] + " kPa\n"\
+            "Umidade do Ar: " + values[5] + "%\n"\
+            "Índice Pluviométrico: " + values[6] + "mm\n"\
 
         dispatcher.utter_message(text=text)
 

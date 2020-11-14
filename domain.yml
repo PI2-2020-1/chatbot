@@ -50,21 +50,21 @@ responses:
       payload: "/parametros_ideais"
   
   utter_ask_data_type:
-  - text: "Primeiro escolha o parâmetro."
+  - text: "Primeiro escolha o parâmetro.\n0-Vento\n1-Pressão Atmosférica\n2-Temperatura do Ar\n3-Ph\n4-Umidade do Solo\n5-Umidade do Ar\n6-Índice Pluviométrico"
     buttons:
-    - title: "Temperatura"
-      payload: "2"
-    - title: "Vento"
+    - title: "0"
       payload: "0"
-    - title: "Ph"
-      payload: "3"
-    - title: "Umidade do Solo"
-      payload: "4"
-    - title: "Umidade do Ar"
-      payload: "5"
-    - title: "Pressão"
+    - title: "1"
       payload: "1"
-    - title: "Chuvas"
+    - title: "2"
+      payload: "2"
+    - title: "3"
+      payload: "3"
+    - title: "4"
+      payload: "4"
+    - title: "5"
+      payload: "5"
+    - title: "6"
       payload: "6"
   
   utter_ask_max:
@@ -83,10 +83,10 @@ slots:
   data_type:
     type: float
     influence_conversation: false
-  max:
+  min:
     type: float
     influence_conversation: false
-  min:
+  max:
     type: float
     influence_conversation: false
   station_number:
@@ -106,12 +106,13 @@ forms:
     data_type:
       - type: from_entity
         entity: value
-    max:
-      - type: from_entity
-        entity: value
     min:
       - type: from_entity
         entity: value
+    max:
+      - type: from_entity
+        entity: value
+
 
 session_config:
   session_expiration_time: 60
