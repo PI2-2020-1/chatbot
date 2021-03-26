@@ -154,7 +154,7 @@ python-socketio==4.6.0
 python-telegram-bot==12.8
 pytz==2019.3
 pyxdg==0.26
-PyYAML==5.3.1
+PyYAML==5.4
 pyzmq==19.0.0
 qtconsole==4.7.3
 QtPy==1.9.0
