@@ -134,7 +134,7 @@ pycups==1.9.73
 pydot==1.4.1
 Pygments==2.6.1
 PyGObject==3.36.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 pykwalify==1.7.0
 pylint==2.4.4
 pyloco==0.0.139
