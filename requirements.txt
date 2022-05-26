@@ -218,7 +218,7 @@ tzlocal==2.1
 ubuntu-advantage-tools==20.3
 ubuntu-drivers-common==0.0.0
 ufw==0.36
-ujson==3.2.0
+ujson==5.2.0
 unattended-upgrades==0.1
 Unidecode==1.1.1
 urllib3==1.25.8
